@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator/check');
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const { check, validationResult } = require('express-validator');
 
+const User = require('../../models/User');
 //@access Public
 //@route POST api/users
 //@desc register user
@@ -18,13 +21,53 @@ router.post(
       'Please enter a password with 8 or more characters'
     ).isLength({ min: 8 })
   ],
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    console.log(req.body);
-    res.send('User route');
+
+    const { name, email, password } = req.body;
+
+    try {
+      //see if user exists
+      let user = await User.findOne({ email });
+
+      if (user) {
+        return res
+          .status(400)
+          .json({ error: [{ msg: 'User already exists ' }] });
+      }
+
+      //get users pro pic/gravatar
+      const avatar = gravatar.url(email, {
+        s: '200',
+        r: 'pg',
+        d: 'mm'
+      });
+
+      user = new User({
+        name,
+        email,
+        avatar,
+        password
+      });
+
+      //encrypt password
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      //return jsonwebtoken
+
+      res.send('User registered');
+    } catch (err) {
+      //any error its coz of server
+      console.log(err.message);
+      res.status(500).send('Server error');
+    }
   }
 );
 
