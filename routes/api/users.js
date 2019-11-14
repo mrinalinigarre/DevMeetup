@@ -70,7 +70,7 @@ router.post(
       };
       jwt.sign(
         payload,
-        config.get('jwtToken'),
+        config.get('jwtSecret'),
         { expiresIn: 36000 },
         (err, token) => {
           if (err) throw err;
@@ -78,7 +78,7 @@ router.post(
         }
       );
 
-      res.send('User registered');
+      //res.send('User registered');
     } catch (err) {
       //any error its coz of server
       console.log(err.message);
