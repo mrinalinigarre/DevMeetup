@@ -99,6 +99,9 @@ const ProfileSchema = new mongoose.Schema({
     },
     linkedin: {
       type: String
+    },
+    instagram: {
+      type: String
     }
   },
   date: {
