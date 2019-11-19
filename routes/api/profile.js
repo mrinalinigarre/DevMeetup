@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
@@ -39,7 +39,7 @@ router.post(
       check('status', 'Status is required')
         .not()
         .isEmpty(),
-      check('skill', 'Skills is required')
+      check('skills', 'Skills is required')
         .not()
         .isEmpty()
     ]
