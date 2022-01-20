@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ansi-regex": ">=5.0.1",
     "axios": ">=0.21.2",
+    "follow-redirects": ">=1.14.7",
+    "json-schema": ">=0.4.0",
     "moment": "^2.24.0",
+    "tmpl": ">=1.0.5",
+    "nth-check": ">=2.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-moment": "^0.9.6",
@@ -14,7 +19,8 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "ws": ">=5.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
